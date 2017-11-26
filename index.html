@@ -63,7 +63,7 @@
 				height:80px;
 				background-color:yellow;
 				font-family: Arial;
-				//border: 2px solid black;
+				border: 2px solid black;
 			}
 			/* End of CSS */
 		</style>
@@ -103,15 +103,6 @@
 	// import "gameHelper.js";
 
 	// var context = canvas.getContext("2d")
-	
-	function move (direction){
-		switch(direction)
-		{
-			case 37: 
-			break;
-		}
-
-	}
 
 	pacman = {
 		x: 6,
@@ -135,8 +126,13 @@
 	var score = 0;
 	var obstacle;
 	var coin_sound = new Audio();
+	var move_sound = new Audio();
 	coin_sound.playbackRate = 1;
 	coin_sound.src = 'sounds/coin.mp3';
+	move_sound.src = 'sounds/move.mp3'
+	move_sound.muted = true;
+
+
 	function drawWorld(){
 		el.innerHTML = '';
 		// el.innerHTML += "<br>";
@@ -180,6 +176,7 @@
 			case 39: moveRight(); break;
 			case 40: moveDown(); break;
 		}
+		drawWorld();
 		// console.log(map)
 	}
 	//#region movement
@@ -190,8 +187,8 @@
 				map[pacman.y][pacman.x] = 3;
 				pacman.x -= 1;
 				map[pacman.y][pacman.x] = 6;
-				drawWorld();
 			}
+			drawWorld();
 	}
 	function moveUp()
 	{
@@ -200,8 +197,8 @@
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y - 1;
 			map[pacman.y][pacman.x] = 6;
-			drawWorld();
 		}
+		drawWorld();
 	}
 	function moveRight()
 	{
@@ -210,7 +207,6 @@
 			map[pacman.y][pacman.x] = 3;
 			pacman.x = pacman.x + 1;
 			map[pacman.y][pacman.x] = 6;
-			drawWorld();
 		}
 	}
 	function moveDown()
@@ -220,17 +216,19 @@
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y + 1;
 			map[pacman.y][pacman.x] = 6;
-			drawWorld();
 		}
+		drawWorld();
 	}
 	//#endregion
 
 	function canMove(obstacle)
 	{
+		move_sound.muted = false;
 		if(obstacle == 1 || obstacle == 4 || obstacle == 5){
 			if(obstacle == 4 || obstacle == 5){
 				alert("You are dead!");
 			}
+			move_sound.muted = true;
 			return false;
 		}
 			
@@ -239,7 +237,7 @@
 			document.getElementById("score_coins").innerHTML = "<center> <strong> Coins taken </strong> <br><br>" + score + "</center>";
 			coin_sound.play();
 		}
-			
+		move_sound.muted = true;
 		return true;
 	}
 
