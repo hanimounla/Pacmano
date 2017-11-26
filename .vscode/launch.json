@@ -5,7 +5,7 @@
             "name": "Launch localhost",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost/Projects/VS%20Code/JavaScript/academy-pacman-master/index.html",
+            "url": "http://localhost/Projects/VS%20Code/JavaScript/pacmano/index.html",
             "webRoot": "${workspaceRoot}/wwwroot"
         },
         {
