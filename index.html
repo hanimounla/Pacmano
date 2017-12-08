@@ -128,7 +128,7 @@
 		[1, 2, 2, 2, 1, 1, 6, 1, 1, 2, 2, 2, 1],
 		[1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1],
 		[1, 2, 1, 1, 2, 2, 1, 2, 2, 1, 1, 2, 1],
-		[1, 4, 2, 2, 2, 2, 1, 2, 2, 2, 2, 5, 1],
+		[1, 4, 2, 2, 2, 2, 1, 2, 2, 2, 2, 4, 1],
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 	]
 
@@ -181,9 +181,47 @@
 		drawWorld();
 		// console.log(map)
 	}
+	function moveGhost()
+	{
+		packman_x = pacman.x;
+		packman_y = pacman.y;
+		ghost_x = 0;
+		ghost_y = 0;
+		
+		for (y = 0; y < map.length; y++) 
+			for (var x = 0; x < map[y].length; x++) 
+				if(map[y][x] == 5)
+				{
+					ghost_x = x;
+					ghost_y = y;
+					moveDirection(packman_x, packman_y, ghost_x, ghost_y);
+				}
+	}
+	function moveDirection (packman_x, packman_y, ghost_x, ghost_y)
+	{
+		var left = false;
+		var right =false;
+		var up = false;
+		var down = false;
+		if(packman_x > ghost_x)
+			left = true;
+		if(packman_x < ghost_x)
+			right = true;
+		if(packman_y < ghost_y)
+			up = true;
+		if(packman_y > ghost_y)
+			down = true;
+
+		if(right && map[ghost_y,ghost_x + 1] != 1)
+			var past = map[ghost_y,ghost_x + 1];
+			map[ghost_y, ghost_x +1 ] = 5;
+			map[ghost_y, ghost_x] = past;
+			drawWorld();
+	}
 	//#region movement
 	function moveLeft() {
 		obstacle = map[pacman.y][pacman.x - 1];
+		moveGhost();
 		if (canMove(obstacle)) {
 			map[pacman.y][pacman.x] = 3;
 			pacman.x -= 1;
@@ -194,6 +232,7 @@
 
 	function moveUp() {
 		obstacle = map[pacman.y - 1][pacman.x];
+		moveGhost();
 		if (canMove(obstacle)) {
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y - 1;
@@ -204,6 +243,7 @@
 
 	function moveRight() {
 		obstacle = map[pacman.y][pacman.x + 1];
+		moveGhost();
 		if (canMove(obstacle)) {
 			map[pacman.y][pacman.x] = 3;
 			pacman.x = pacman.x + 1;
@@ -213,6 +253,7 @@
 
 	function moveDown() {
 		obstacle = map[pacman.y + 1][pacman.x];
+		moveGhost();
 		if (canMove(obstacle)) {
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y + 1;
