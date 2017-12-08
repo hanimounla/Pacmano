@@ -184,6 +184,7 @@
 		var right =false;
 		var up = false;
 		var down = false;
+
 		if(pacman_x > ghost_x)
 			right = true;
 		if(pacman_x < ghost_x)
@@ -194,33 +195,32 @@
 			down = true;
 
 		var past = 0;
-		if(right && map[ghost_y][ghost_x + 1] != 1)
+		var on_right = map[ghost_y][ghost_x + 1];
+		var on_left = map[ghost_y][ghost_x - 1];
+		var on_up = map[ghost_y - 1][ghost_x];
+		var on_down = map[ghost_y + 1][ghost_x];
+
+		if(right && on_right != 1)
 		{
-			past = map[ghost_y][ghost_x + 1];
+			past = on_right;
 			map[ghost_y][ghost_x + 1] = 51;
-			map[ghost_y][ghost_x] = past;
 		}
-
-		else if(left && map[ghost_y][ghost_x - 1] != 1)
+		else if(left && on_left != 1)
 		{
-			past = map[ghost_y][ghost_x - 1];
+			past = on_left;
 			map[ghost_y][ghost_x - 1] = 51;
-			map[ghost_y][ghost_x] = past;
 		}
-
-		else if(down && map[ghost_y + 1][ghost_x] != 1)
+		else if(down && on_down != 1)
 		{
-			past = map[ghost_y + 1][ghost_x];
+			past = on_down;
 			map[ghost_y + 1][ghost_x] = 51;
-			map[ghost_y][ghost_x] = past;
 		}
-
-		else if(up && map[ghost_y - 1][ghost_x] != 1)
+		else if(up && on_up != 1)
 		{
-			past = map[ghost_y - 1][ghost_x];
+			past = on_up;
 			map[ghost_y - 1][ghost_x] = 51;
-			map[ghost_y][ghost_x] = past;	
 		}
+		map[ghost_y][ghost_x] = past;	
 	}
 
 	//#region movements
@@ -288,6 +288,5 @@
 	}
 
 	// End of JavaScript
-</script>
-
+	</script>
 </html>
