@@ -2,18 +2,9 @@
 <html lang="en">
 
 <head>
-	<title>PacMan</title>
+	<title>PACMANO !</title>
 	<style>
 		/* All of our CSS code goes here... */
-
-		* {
-			/* outline: 1px dotted purple; */
-		}
-
-		.score::first-line {
-			color: #0e24e9;
-			content: "Score:"
-		}
 
 		.wall {
 			width: 50px;
@@ -178,16 +169,12 @@
 	{
 		pacman_x = pacman.x;
 		pacman_y = pacman.y;
-		ghost_x = 0;
-		ghost_y = 0;
-
 		for (y = 0; y < map.length; y++) 
 			for (var x = 0; x < map[y].length; x++) 
-				if(map[y][x] == 5)
+				if(map[y][x] == 5)//ghost
 				{
-					ghost_x = x;
-					ghost_y = y;
-					moveDirection(pacman_x, pacman_y, ghost_x, ghost_y);
+					moveDirection(pacman_x, pacman_y, x, y);
+					return;
 				}
 	}
 
@@ -206,53 +193,79 @@
 		if(pacman_y > ghost_y)
 			down = true;
 
+		var past = 0;
 		if(right && map[ghost_y][ghost_x + 1] != 1)
 		{
-			var past = map[ghost_y][ghost_x + 1];
+			past = map[ghost_y][ghost_x + 1];
 			map[ghost_y][ghost_x + 1] = 5;
+			map[ghost_y][ghost_x] = past;
+		}
+
+		if(left && map[ghost_y][ghost_x - 1] != 1)
+		{
+			past = map[ghost_y][ghost_x - 1];
+			map[ghost_y][ghost_x - 1] = 5;
+			map[ghost_y][ghost_x] = past;
+		}
+
+		else if(down && map[ghost_y + 1][ghost_x] != 1)
+		{
+			past = map[ghost_y + 1][ghost_x];
+			map[ghost_y + 1][ghost_x] = 5;
+			map[ghost_y][ghost_x] = past;
+		}
+
+		else if(up && map[ghost_y - 1][ghost_x] != 1)
+		{
+			past = map[ghost_y - 1][ghost_x];
+			map[ghost_y - 1][ghost_x] = 5;
 			map[ghost_y][ghost_x] = past;
 		}
 	}
 
-	//#region movement
-	function moveLeft() {
+	//#region movements
+	function moveLeft() 
+	{
 		obstacle = map[pacman.y][pacman.x - 1];
-		
-		if (canMove(obstacle)) {
+		if (canMove(obstacle)) 
+		{
 			map[pacman.y][pacman.x] = 3;
 			pacman.x -= 1;
 			map[pacman.y][pacman.x] = 6;
 		}
-		drawWorld();
 	}
 
-	function moveUp() {
+	function moveUp()
+	{
 		obstacle = map[pacman.y - 1][pacman.x];
-		if (canMove(obstacle)) {
+		if (canMove(obstacle))
+		 {
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y - 1;
 			map[pacman.y][pacman.x] = 6;
 		}
-		drawWorld();
 	}
 
-	function moveRight() {
+	function moveRight()
+	 {
 		obstacle = map[pacman.y][pacman.x + 1];
-		if (canMove(obstacle)) {
+		if (canMove(obstacle)) 
+		{
 			map[pacman.y][pacman.x] = 3;
 			pacman.x = pacman.x + 1;
 			map[pacman.y][pacman.x] = 6;
 		}
-		drawWorld();
 	}
-	function moveDown() {
+
+	function moveDown()
+	 {
 		obstacle = map[pacman.y + 1][pacman.x];
-		if (canMove(obstacle)) {
+		if (canMove(obstacle)) 
+		{
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y + 1;
 			map[pacman.y][pacman.x] = 6;
 		}
-		drawWorld();
 	}
 	//#endregion
 
@@ -267,8 +280,7 @@
 		}
 		if (obstacle == 2) { //coin
 			score += 1;
-			document.getElementById("score_coins").innerHTML = "<center> <strong> Coins taken </strong> <br><br>" + score +
-				"</center>";
+			document.getElementById("score_coins").innerHTML = score;
 			// coin_sound.play();
 		}
 		// move_sound.muted = true;
