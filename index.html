@@ -1,93 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>PacMan</title>	
-		<style>
-			/* All of our CSS code goes here... */
-			* { 
-				/* outline: 1px dotted purple; */
-			}
 
-			.score::first-line {
-				color: #0e24e9;
-				content: "Score:"
-			}
+<head>
+	<title>PacMan</title>
+	<style>
+		/* All of our CSS code goes here... */
 
-			.wall {
-				width: 50px;
-				height: 50px;
-				background-image: url('images/wall.png');
-				display: inline-block;
-			}
-			.coin {
-				width: 50px;
-				height: 50px;
-				background-image: url('images/coin.png');
-				display: inline-block;
-			}
-			.ground {
-				width: 50px;
-				height: 50px;
-				background-image: url('images/bg.png');
-				display: inline-block;
-			}
-			.ghost1 {
-				width: 50px;
-				height: 50px;
-				background-image: url('images/ghost1.png');
-				display: inline-block;
-			}
-			.ghost2 {
-				width: 50px;
-				height: 50px;
-				background-image: url('images/ghost2.png');
-				display: inline-block;
-			}
-			.pacman {
-				width: 50px;
-				height: 50px;
-				background-image: url('images/pacman.png');
-				display: inline-block;
-			}
+		* {
+			/* outline: 1px dotted purple; */
+		}
 
-			div {
-				line-height: 0px;
-			}
-			#score_coins {
-				padding: 10px;
-				padding-top: 20px;
-				position:fixed;
-				top:10px;
-				right:50px;
-				width:100px;
-				height:80px;
-				background-color:yellow;
-				font-family: Arial;
-				border: 2px solid black;
-			}
-			/* End of CSS */
-		</style>
-	</head>
-	<body>
-		<!-- All of our HTML code goes here... -->
-		<div id="score_coins"></div>
+		.score::first-line {
+			color: #0e24e9;
+			content: "Score:"
+		}
+
+		.wall {
+			width: 50px;
+			height: 50px;
+			background-image: url('images/wall.png');
+			display: inline-block;
+		}
+
+		.coin {
+			width: 50px;
+			height: 50px;
+			background-image: url('images/coin.png');
+			display: inline-block;
+		}
+
+		.ground {
+			width: 50px;
+			height: 50px;
+			background-image: url('images/bg.png');
+			display: inline-block;
+		}
+
+		.ghost1 {
+			width: 50px;
+			height: 50px;
+			background-image: url('images/ghost1.png');
+			display: inline-block;
+		}
+
+		.ghost2 {
+			width: 50px;
+			height: 50px;
+			background-image: url('images/ghost2.png');
+			display: inline-block;
+		}
+
+		.pacman {
+			width: 50px;
+			height: 50px;
+			background-image: url('images/pacman.png');
+			display: inline-block;
+		}
+
+		div {
+			line-height: 0px;
+		}
+
+		#score_coins {
+			padding: 10px;
+			padding-top: 20px;
+			position: fixed;
+			top: 10px;
+			right: 50px;
+			width: 100px;
+			height: 80px;
+			background-color: yellow;
+			font-family: Arial;
+			border: 2px solid black;
+		}
+		/* End of CSS */
+	</style>
+</head>
+
+<body>
+	<!-- All of our HTML code goes here... -->
+	<div id="score_coins"></div>
+	<br>
+	<br>
+	<br>
+	<div>
+		<button onclick="moveUp()">Up</button>
 		<br>
+		<button onclick="moveLeft()">Left</button>
+		<button onclick="moveRight()">Right</button>
 		<br>
-		<br>
-		<div>
-		<button onclick ="moveUp()">Up</button> <br>
-		<button onclick ="moveLeft()">Left</button>
-		<button onclick ="moveRight()">Right</button> <br>
-		<button onclick ="moveDown()">Down</button>
+		<button onclick="moveDown()">Down</button>
 		<br>
 		<br>
 		<br>
 		<br>
 		<div id='world'>
-		
-		
-		<!-- End of HTML-->
-	</body>
+
+
+			<!-- End of HTML-->
+</body>
 <script>
 	// All of our JavaScript code goes here... 
 	// <div class='wall'></div>
@@ -109,20 +120,20 @@
 		y: 4
 	}
 
-	map = [ 
-		[1,1,1,1,1,1,1,1,1,1,1,1,1], 
-		[1,5,2,2,2,2,1,2,2,2,2,4,1], 
-		[1,2,1,1,1,2,1,2,1,1,1,2,1], 
-		[1,2,1,2,2,2,2,2,2,2,1,2,1], 
-		[1,2,2,2,1,1,6,1,1,2,2,2,1], 
-		[1,2,1,2,2,2,2,2,2,2,1,2,1], 
-		[1,2,1,1,2,2,1,2,2,1,1,2,1], 
-		[1,4,2,2,2,2,1,2,2,2,2,5,1], 
-		[1,1,1,1,1,1,1,1,1,1,1,1,1]
+	map = [
+		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+		[1, 5, 2, 2, 2, 2, 1, 2, 2, 2, 2, 4, 1],
+		[1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1],
+		[1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1],
+		[1, 2, 2, 2, 1, 1, 6, 1, 1, 2, 2, 2, 1],
+		[1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1],
+		[1, 2, 1, 1, 2, 2, 1, 2, 2, 1, 1, 2, 1],
+		[1, 4, 2, 2, 2, 2, 1, 2, 2, 2, 2, 5, 1],
+		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 	]
 
 	var el = document.getElementById("world");
-	var scoreLBL = document.getElementById("score");
+	var scoreLBL = document.getElementById("score_coins");
 	var score = 0;
 	var obstacle;
 	var coin_sound = new Audio();
@@ -133,86 +144,76 @@
 	move_sound.muted = true;
 
 
-	function drawWorld(){
+	function drawWorld() {
 		el.innerHTML = '';
-		// el.innerHTML += "<br>";
-		// el.innerHTML += "<br>";
-		// el.innerHTML += "<br>";
-		// el.innerHTML += "<div>";
-		for(y = 0; y < map.length ; y++) {
-			for(var x = 0; x < map[y].length ; x++) {		
+
+		for (y = 0; y < map.length; y++) {
+			for (var x = 0; x < map[y].length; x++) {
 				if (map[y][x] === 1) {
 					el.innerHTML += "<div class='wall'></div>";
-				}
-				else if (map[y][x] === 2) {
+				} else if (map[y][x] === 2) {
 					el.innerHTML += "<div class='coin'></div>";
-				}
-				else if (map[y][x] === 3) {
+				} else if (map[y][x] === 3) {
 					el.innerHTML += "<div class='ground'></div>";
-				}
-				else if (map[y][x] === 4) {
+				} else if (map[y][x] === 4) { // ghost1
 					el.innerHTML += "<div class='ghost1'></div>";
-				}
-				else if (map[y][x] === 5) {
+				} else if (map[y][x] === 5) { // ghost2
 					el.innerHTML += "<div class='ghost2'></div>";
-				}
-				else if (map[y][x] === 6) {
+				} else if (map[y][x] === 6) {
 					el.innerHTML += "<div class='pacman'></div>";
 				}
 			}
 			el.innerHTML += "<br>";
-			
 		}
 	}
 
 	drawWorld();
 
-	document.onkeydown = function(event){
+	document.onkeydown = function (event) {
 		// console.log(event.keyCode);
-		switch(event.keyCode)
+		switch (event.keyCode)
 		{
-			case 37: moveLeft(); break;
-			case 38: moveUp(); break;
-			case 39: moveRight(); break;
-			case 40: moveDown(); break;
+			case 37:moveLeft();break;
+			case 38:moveUp();break;
+			case 39:moveRight();break;
+			case 40:moveDown();break;
 		}
 		drawWorld();
 		// console.log(map)
 	}
 	//#region movement
-	function moveLeft()
-	{
-		obstacle = map[pacman.y][pacman.x-1];
-			if (canMove(obstacle)){
-				map[pacman.y][pacman.x] = 3;
-				pacman.x -= 1;
-				map[pacman.y][pacman.x] = 6;
-			}
-			drawWorld();
+	function moveLeft() {
+		obstacle = map[pacman.y][pacman.x - 1];
+		if (canMove(obstacle)) {
+			map[pacman.y][pacman.x] = 3;
+			pacman.x -= 1;
+			map[pacman.y][pacman.x] = 6;
+		}
+		drawWorld();
 	}
-	function moveUp()
-	{
-		obstacle = map[pacman.y-1][pacman.x];
-		if (canMove(obstacle)){
+
+	function moveUp() {
+		obstacle = map[pacman.y - 1][pacman.x];
+		if (canMove(obstacle)) {
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y - 1;
 			map[pacman.y][pacman.x] = 6;
 		}
 		drawWorld();
 	}
-	function moveRight()
-	{
-		obstacle = map[pacman.y][pacman.x+1];
-		if (canMove(obstacle)){
+
+	function moveRight() {
+		obstacle = map[pacman.y][pacman.x + 1];
+		if (canMove(obstacle)) {
 			map[pacman.y][pacman.x] = 3;
 			pacman.x = pacman.x + 1;
 			map[pacman.y][pacman.x] = 6;
 		}
 	}
-	function moveDown()
-	{
-		obstacle =  map[pacman.y+1][pacman.x];
-		if (canMove(obstacle)){
+
+	function moveDown() {
+		obstacle = map[pacman.y + 1][pacman.x];
+		if (canMove(obstacle)) {
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y + 1;
 			map[pacman.y][pacman.x] = 6;
@@ -221,26 +222,27 @@
 	}
 	//#endregion
 
-	function canMove(obstacle)
-	{
+	function canMove(obstacle) {
 		move_sound.muted = false;
-		if(obstacle == 1 || obstacle == 4 || obstacle == 5){
-			if(obstacle == 4 || obstacle == 5){
+		if (obstacle == 1 || obstacle == 4 || obstacle == 5) {
+			if (obstacle == 4 || obstacle == 5) {
 				alert("You are dead!");
 			}
 			move_sound.muted = true;
 			return false;
 		}
-			
-		if(obstacle == 2) {   //coin
-			score +=1;
-			document.getElementById("score_coins").innerHTML = "<center> <strong> Coins taken </strong> <br><br>" + score + "</center>";
-			coin_sound.play();
+
+		if (obstacle == 2) { //coin
+			score += 1;
+			document.getElementById("score_coins").innerHTML = "<center> <strong> Coins taken </strong> <br><br>" + score +
+				"</center>";
+			// coin_sound.play();
 		}
-		move_sound.muted = true;
+		// move_sound.muted = true;
 		return true;
 	}
 
 	// End of JavaScript
 </script>
+
 </html>
