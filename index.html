@@ -83,20 +83,13 @@
 	<br>
 	<br>
 	<br>
-	<div>
-		<button onclick="moveUp()">Up</button>
-		<br>
-		<button onclick="moveLeft()">Left</button>
-		<button onclick="moveRight()">Right</button>
-		<br>
-		<button onclick="moveDown()">Down</button>
-		<br>
-		<br>
-		<br>
-		<br>
-		<div id='world'>
-
-
+	<button onclick="moveUp()">Up</button><br>
+	<button onclick="moveLeft()">Left</button>
+	<button onclick="moveRight()">Right</button><br>
+	<button onclick="moveDown()">Down</button>
+	<br>
+	<br>
+	<div id='world'>
 			<!-- End of HTML-->
 </body>
 <script>
@@ -113,8 +106,8 @@
 
 	// import "gameHelper.js";
 
-	// var context = canvas.getContext("2d")
-
+	// var context = canvas.getContext("2d")}
+	
 	pacman = {
 		x: 6,
 		y: 4
@@ -143,30 +136,6 @@
 	move_sound.src = 'sounds/move.mp3'
 	move_sound.muted = true;
 
-
-	function drawWorld() {
-		el.innerHTML = '';
-
-		for (y = 0; y < map.length; y++) {
-			for (var x = 0; x < map[y].length; x++) {
-				if (map[y][x] === 1) {
-					el.innerHTML += "<div class='wall'></div>";
-				} else if (map[y][x] === 2) {
-					el.innerHTML += "<div class='coin'></div>";
-				} else if (map[y][x] === 3) {
-					el.innerHTML += "<div class='ground'></div>";
-				} else if (map[y][x] === 4) { // ghost1
-					el.innerHTML += "<div class='ghost1'></div>";
-				} else if (map[y][x] === 5) { // ghost2
-					el.innerHTML += "<div class='ghost2'></div>";
-				} else if (map[y][x] === 6) {
-					el.innerHTML += "<div class='pacman'></div>";
-				}
-			}
-			el.innerHTML += "<br>";
-		}
-	}
-
 	drawWorld();
 
 	document.onkeydown = function (event) {
@@ -181,47 +150,74 @@
 		drawWorld();
 		// console.log(map)
 	}
+
+	function drawWorld() 
+	{
+		el.innerHTML = '';
+		for (y = 0; y < map.length; y++)
+		 {
+			for (var x = 0; x < map[y].length; x++) 
+			{
+				switch(map[y][x])
+				{
+					case 1: el.innerHTML += "<div class='wall'></div>"; break;
+					case 2: el.innerHTML += "<div class='coin'></div>"; break;
+					case 3: el.innerHTML += "<div class='ground'></div>"; break;
+					case 4: el.innerHTML += "<div class='ghost1'></div>"; break;
+					case 5: el.innerHTML += "<div class='ghost2'></div>"; break;
+					case 6: el.innerHTML += "<div class='pacman'></div>"; break;
+				}
+			}
+			el.innerHTML += "<br>";
+		}
+		moveGhost();
+	}
+
+	
 	function moveGhost()
 	{
-		packman_x = pacman.x;
-		packman_y = pacman.y;
+		pacman_x = pacman.x;
+		pacman_y = pacman.y;
 		ghost_x = 0;
 		ghost_y = 0;
-		
+
 		for (y = 0; y < map.length; y++) 
 			for (var x = 0; x < map[y].length; x++) 
 				if(map[y][x] == 5)
 				{
 					ghost_x = x;
 					ghost_y = y;
-					moveDirection(packman_x, packman_y, ghost_x, ghost_y);
+					moveDirection(pacman_x, pacman_y, ghost_x, ghost_y);
 				}
 	}
-	function moveDirection (packman_x, packman_y, ghost_x, ghost_y)
+
+	function moveDirection (pacman_x, pacman_y, ghost_x, ghost_y)
 	{
 		var left = false;
 		var right =false;
 		var up = false;
 		var down = false;
-		if(packman_x > ghost_x)
-			left = true;
-		if(packman_x < ghost_x)
+		if(pacman_x > ghost_x)
 			right = true;
-		if(packman_y < ghost_y)
+		if(pacman_x < ghost_x)
+			left = true;
+		if(pacman_y < ghost_y)
 			up = true;
-		if(packman_y > ghost_y)
+		if(pacman_y > ghost_y)
 			down = true;
 
-		if(right && map[ghost_y,ghost_x + 1] != 1)
-			var past = map[ghost_y,ghost_x + 1];
-			map[ghost_y, ghost_x +1 ] = 5;
-			map[ghost_y, ghost_x] = past;
-			drawWorld();
+		if(right && map[ghost_y][ghost_x + 1] != 1)
+		{
+			var past = map[ghost_y][ghost_x + 1];
+			map[ghost_y][ghost_x + 1] = 5;
+			map[ghost_y][ghost_x] = past;
+		}
 	}
+
 	//#region movement
 	function moveLeft() {
 		obstacle = map[pacman.y][pacman.x - 1];
-		moveGhost();
+		
 		if (canMove(obstacle)) {
 			map[pacman.y][pacman.x] = 3;
 			pacman.x -= 1;
@@ -232,7 +228,6 @@
 
 	function moveUp() {
 		obstacle = map[pacman.y - 1][pacman.x];
-		moveGhost();
 		if (canMove(obstacle)) {
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y - 1;
@@ -243,17 +238,15 @@
 
 	function moveRight() {
 		obstacle = map[pacman.y][pacman.x + 1];
-		moveGhost();
 		if (canMove(obstacle)) {
 			map[pacman.y][pacman.x] = 3;
 			pacman.x = pacman.x + 1;
 			map[pacman.y][pacman.x] = 6;
 		}
+		drawWorld();
 	}
-
 	function moveDown() {
 		obstacle = map[pacman.y + 1][pacman.x];
-		moveGhost();
 		if (canMove(obstacle)) {
 			map[pacman.y][pacman.x] = 3;
 			pacman.y = pacman.y + 1;
@@ -272,7 +265,6 @@
 			move_sound.muted = true;
 			return false;
 		}
-
 		if (obstacle == 2) { //coin
 			score += 1;
 			document.getElementById("score_coins").innerHTML = "<center> <strong> Coins taken </strong> <br><br>" + score +
