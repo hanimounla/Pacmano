@@ -5,7 +5,6 @@
 	<title>PACMANO !</title>
 	<style>
 		/* All of our CSS code goes here... */
-
 		.wall {
 			width: 50px;
 			height: 50px;
@@ -163,7 +162,6 @@
 		}
 		moveGhost();
 	}
-
 	
 	function moveGhost()
 	{
@@ -200,7 +198,10 @@
 		var on_up = map[ghost_y - 1][ghost_x];
 		var on_down = map[ghost_y + 1][ghost_x];
 
-		if(right && on_right != 1)
+		if(on_right == 6 || on_left == 6 || on_up == 6 || on_down == 6)
+			alert("You are dead !");
+
+		else if(right && on_right != 1)
 		{
 			past = on_right;
 			map[ghost_y][ghost_x + 1] = 51;
