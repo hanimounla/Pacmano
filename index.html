@@ -99,20 +99,20 @@
 	// var context = canvas.getContext("2d")}
 	
 	pacman = {
-		x: 6,
+		x: 9,
 		y: 4
 	}
 
 	map = [
-		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-		[1,51, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1],
-		[1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1],
-		[1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1],
-		[1, 2, 2, 2, 1, 1, 6, 1, 1, 2, 2, 2, 1],
-		[1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1],
-		[1, 2, 1, 1, 2, 2, 1, 2, 2, 1, 1, 2, 1],
-		[1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1],
-		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+		[1, 1, 1, 1, 1, 1,1,1,1, 1, 1,1,1,1, 1, 1, 1, 1, 1],
+		[1,51, 2, 2, 2, 2,2,2,2, 1, 2,2,2,2, 2, 2, 2,52, 1],
+		[1, 2, 1, 1, 1, 2,2,2,2, 1, 2,2,2,2, 1, 1, 1, 2, 1],
+		[1, 2, 1, 2, 2, 2,2,2,2, 2, 2,2,2,2, 2, 2, 1, 2, 1],
+		[1, 2, 2, 2, 1, 1,1,1,1, 6, 1,1,1,1, 1, 2, 2, 2, 1],
+		[1, 2, 1, 2, 2, 2,2,2,2, 2, 2,2,2,2, 2, 2, 1, 2, 1],
+		[1, 2, 1, 1, 2, 2,2,2,2, 1, 2,2,2,2, 2, 1, 1, 2, 1],
+		[1,52, 2, 2, 2, 2,2,2,2, 1, 2,2,2,2, 2, 2, 2,51, 1],
+		[1, 1, 1, 1, 1, 1,1,1,1, 1, 1,1,1,1, 1, 1, 1, 1, 1]
 	]
 
 	var el = document.getElementById("world");
@@ -168,15 +168,15 @@
 		pacman_x = pacman.x;
 		pacman_y = pacman.y;
 		for (y = 0; y < map.length; y++) 
-			for (var x = 0; x < map[y].length; x++) 
-				if(map[y][x] == 51)//ghost1
+			for (var x = 0; x < map[y].length; x++)
+				switch(map[y][x])
 				{
-					moveDirection(pacman_x, pacman_y, x, y);
-					return;
+					case 51: moveDirection(pacman_x, pacman_y, x, y, 51); x++; break;
+					case 52: moveDirection(pacman_x, pacman_y, x, y, 52); x++; break;
 				}
 	}
 
-	function moveDirection (pacman_x, pacman_y, ghost_x, ghost_y)
+	function moveDirection (pacman_x, pacman_y, ghost_x, ghost_y, ghost_tag)
 	{
 		var left = false;
 		var right =false;
@@ -204,22 +204,22 @@
 		else if(right && on_right != 1)
 		{
 			past = on_right;
-			map[ghost_y][ghost_x + 1] = 51;
+			map[ghost_y][ghost_x + 1] = ghost_tag;
 		}
 		else if(left && on_left != 1)
 		{
 			past = on_left;
-			map[ghost_y][ghost_x - 1] = 51;
+			map[ghost_y][ghost_x - 1] = ghost_tag;
 		}
 		else if(down && on_down != 1)
 		{
 			past = on_down;
-			map[ghost_y + 1][ghost_x] = 51;
+			map[ghost_y + 1][ghost_x] = ghost_tag;
 		}
 		else if(up && on_up != 1)
 		{
 			past = on_up;
-			map[ghost_y - 1][ghost_x] = 51;
+			map[ghost_y - 1][ghost_x] = ghost_tag;
 		}
 		map[ghost_y][ghost_x] = past;	
 	}
