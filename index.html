@@ -105,13 +105,13 @@
 
 	map = [
 		[1, 1, 1, 1, 1, 1,1,1,1, 1, 1,1,1,1, 1, 1, 1, 1, 1],
-		[1,51, 2, 2, 2, 2,2,2,2, 1, 2,2,2,2, 2, 2, 2,52, 1],
+		[1,51, 2, 2, 2, 2,2,2,2, 1, 2,2,2,2, 2, 2, 2,2, 1],
 		[1, 2, 1, 1, 1, 2,2,2,2, 1, 2,2,2,2, 1, 1, 1, 2, 1],
 		[1, 2, 1, 2, 2, 2,2,2,2, 2, 2,2,2,2, 2, 2, 1, 2, 1],
 		[1, 2, 2, 2, 1, 1,1,1,1, 6, 1,1,1,1, 1, 2, 2, 2, 1],
 		[1, 2, 1, 2, 2, 2,2,2,2, 2, 2,2,2,2, 2, 2, 1, 2, 1],
 		[1, 2, 1, 1, 2, 2,2,2,2, 1, 2,2,2,2, 2, 1, 1, 2, 1],
-		[1,52, 2, 2, 2, 2,2,2,2, 1, 2,2,2,2, 2, 2, 2,51, 1],
+		[1,2, 2, 2, 2, 2,2,2,2, 1, 2,2,2,2, 2, 2, 2,2, 1],
 		[1, 1, 1, 1, 1, 1,1,1,1, 1, 1,1,1,1, 1, 1, 1, 1, 1]
 	]
 
@@ -192,7 +192,7 @@
 		if(pacman_y > ghost_y)
 			down = true;
 
-		var past = 0;
+		var past = 2;
 		var on_right = map[ghost_y][ghost_x + 1];
 		var on_left = map[ghost_y][ghost_x - 1];
 		var on_up = map[ghost_y - 1][ghost_x];
@@ -216,11 +216,23 @@
 			past = on_down;
 			map[ghost_y + 1][ghost_x] = ghost_tag;
 		}
+		else if(down && on_down == 1 && on_right != 1)
+		{
+			past = on_right;
+			map[ghost_y][ghost_x + 1] = ghost_tag;
+		}
 		else if(up && on_up != 1)
 		{
 			past = on_up;
 			map[ghost_y - 1][ghost_x] = ghost_tag;
 		}
+		else if(up && on_up == 1 && on_right != 1)
+		{
+			past = on_right;
+			map[ghost_y][ghost_x + 1] = ghost_tag;
+		}
+		else 
+			return;
 		map[ghost_y][ghost_x] = past;	
 	}
 
